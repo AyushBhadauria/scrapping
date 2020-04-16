@@ -16,21 +16,20 @@ const getPdfData = (element, cookie) => {
 
     const request6Headers = constants.getRequest6Headers(cookie);
     const request6Form = { address: (element.title).trim(), id, honeypot: '' };
-    const { response: response6 } = await request.post(element.pdflink,
-      request6Form, null, request6Headers);
-
-    const $ = cheerio.load(response6);
+    const body6 = await request.postPromise(constants.REQUEST_6_URL,
+      request6Form, request6Headers);
+    const $ = cheerio.load(body6);
     $('#maincontent table tr:nth-child(2) td').each(async (i, elem) => {
       const linktemp = $(elem).find('a').attr('href');
       dlinkList.push({
         title: $(elem).text(),
         downlink: constants.SCRAPPING_URL + linktemp,
       });
-
-      const { response: response7 } = await request.get(dlinkList[0].downlink,
+      const body7 = await request.getPromise(dlinkList[0].downlink,
         constants.PROXY_URL, constants.REQUEST_7_HEADERS);
-      const fileName = `uploads/${(element.title).trim()}.pdf`;
-      const buffer = Buffer.from(response7, 'utf8');
+      console.log('body7', body7.length);
+      const fileName = `${constants.UPLOAD_DIRECTORY}/${(element.title).trim()}.pdf`;
+      const buffer = Buffer.from(body7, 'utf8');
       fs.writeFileSync(fileName, buffer);
       resolve();
     });
@@ -66,7 +65,7 @@ module.exports.scrapeRealtor = (postcode) => new Promise(async (resolve, reject)
     // request 4
     const request4Headers = constants.getRequest4Headers(cookie3);
     const request4Form = { postcode, id: 'id=22fe93f5601f68e4' };
-    const { body } = await request.post(constants.REQUEST_3_URL,
+    const { body } = await request.post(constants.REQUEST_4_URL,
       request4Form, null, request4Headers);
 
     const $ = cheerio.load(body);
