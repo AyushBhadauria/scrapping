@@ -29,7 +29,8 @@ module.exports.readPDF = async (directory) => new Promise(async (resolve) => {
       // eslint-disable-next-line no-await-in-loop
       const area = await getArea(`${directory}/${filename}`);
       response.push({
-        address: filename,
+        filename,
+        address: filename.split('.')[0],
         area,
       });
     }
