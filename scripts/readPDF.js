@@ -6,17 +6,22 @@ const reader = new pdfReader.PdfReader();
 const getArea = (filepath) => new Promise((resolve) => {
   const pdfBuffer = fs.readFileSync(filepath);
   let isAreaLineKicked = false;
-  reader.parseBuffer(pdfBuffer, (err, data) => {
-    if (err) {
-      resolve();
-    }
-    if (isAreaLineKicked) {
-      resolve(data && data.text);
-    }
-    if (data && data.text && data.text.includes(constants.TOTAL_AREA_KEY)) {
-      isAreaLineKicked = true;
-    }
-  });
+  try {
+    reader.parseBuffer(pdfBuffer, (err, data) => {
+      if (err) {
+        resolve('Corrupted File');
+      }
+      if (isAreaLineKicked) {
+        resolve(data && data.text);
+      }
+      if (data && data.text && data.text.includes(constants.TOTAL_AREA_KEY)) {
+        isAreaLineKicked = true;
+      }
+    });
+  } catch (err) {
+    console.log('Error occured while getting area from file', err);
+    resolve('Corrupted File');
+  }
 });
 
 // eslint-disable-next-line no-async-promise-executor
