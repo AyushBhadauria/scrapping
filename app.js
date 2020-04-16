@@ -19,6 +19,7 @@ app.get('/:code', async (req, res) => {
   } catch (err) {
     console.log('Something went wrong');
     console.error(err);
+    res.sendStatus(500).send(err);
   }
 });
 

@@ -3,12 +3,12 @@ const pdfReader = require('pdfreader');
 const constants = require('./constants');
 
 const reader = new pdfReader.PdfReader();
-const getArea = (filepath) => new Promise((resolve, reject) => {
+const getArea = (filepath) => new Promise((resolve) => {
   const pdfBuffer = fs.readFileSync(filepath);
   let isAreaLineKicked = false;
   reader.parseBuffer(pdfBuffer, (err, data) => {
     if (err) {
-      reject(err);
+      resolve();
     }
     if (isAreaLineKicked) {
       resolve(data && data.text);
