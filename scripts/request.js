@@ -45,6 +45,7 @@ module.exports.getPromise = (url, proxy, headers) => new Promise((resolve, rejec
   const options = {
     method: 'GET',
     url,
+    encoding: null,
     proxy,
     headers,
   };
