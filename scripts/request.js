@@ -42,6 +42,7 @@ module.exports.getPromise = (url, proxy, headers) => new Promise((resolve, rejec
     rejectUnauthorized: false,
     followAllRedirects: true, // allow redirections
   });
+
   const options = {
     method: 'GET',
     url,
@@ -49,7 +50,7 @@ module.exports.getPromise = (url, proxy, headers) => new Promise((resolve, rejec
     proxy,
     headers,
   };
-  console.log('Get Promise request', options);
+
   req(options).then((body) => {
     resolve(body);
   }).catch((err) => {
@@ -102,13 +103,14 @@ module.exports.postPromise = (url, form, headers) => new Promise((resolve, rejec
     rejectUnauthorized: false,
     followAllRedirects: true, // allow redirections
   });
+
   const options = {
     method: 'POST',
     url,
     form,
     headers,
   };
-  console.log('post Promise request', options);
+
   req(options).then((body) => {
     resolve(body);
   }).catch((err) => {

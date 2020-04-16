@@ -8,18 +8,17 @@ const getArea = (filepath) => new Promise((resolve) => {
   let isAreaLineKicked = false;
   try {
     reader.parseBuffer(pdfBuffer, (err, data) => {
-      if (err) {
-        resolve('Corrupted File');
-      }
       if (isAreaLineKicked) {
         resolve(data && data.text);
       }
       if (data && data.text && data.text.includes(constants.TOTAL_AREA_KEY)) {
         isAreaLineKicked = true;
       }
+      if (!data) {
+        resolve('Corrupted File');
+      }
     });
   } catch (err) {
-    console.log('Error occured while getting area from file', err);
     resolve('Corrupted File');
   }
 });
