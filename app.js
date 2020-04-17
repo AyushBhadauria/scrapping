@@ -15,6 +15,7 @@ app.get('/:code', async (req, res) => {
 
     await scrapper.scrapeRealtor(postcode);
     const response = await readPDF.readPDF(constants.UPLOAD_DIRECTORY);
+
     utils.deleteDirectory(constants.UPLOAD_DIRECTORY);
 
     res.json(response);
