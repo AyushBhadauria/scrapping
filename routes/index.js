@@ -2,6 +2,8 @@ const readPDF = require('../scripts/readPDF');
 const constants = require('../scripts/constants');
 const scrapper = require('../scripts/webScrapper');
 
+// const utils = require('../scripts/utils');
+
 module.exports.getHomeData = (req, res) => {
   res.render('index.ejs');
 };
