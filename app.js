@@ -1,29 +1,18 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
+const routes = require('./routes');
 
-const scrapper = require('./scripts/webScrapper');
-const readPDF = require('./scripts/readPDF');
-const constants = require('./scripts/constants');
-const utils = require('./scripts/utils');
+// const utils = require('./scripts/utils');
 
-
-app.get('/:code', async (req, res) => {
-  try {
-    const postcode = req.params.code;
-
-    await scrapper.scrapeRealtor(postcode);
-    const response = await readPDF.readPDF(constants.UPLOAD_DIRECTORY);
-
-    utils.deleteDirectory(constants.UPLOAD_DIRECTORY);
-
-    res.json(response);
-  } catch (err) {
-    console.log('Something went wrong');
-    console.error(err);
-    res.sendStatus(500).send(err);
-  }
-});
+app.set('views', `${__dirname}/views`);
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.get('/', routes.getHomeData);
+app.post('/', routes.createPDF);
+app.get('/getPDF', routes.getDatafromPDF);
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

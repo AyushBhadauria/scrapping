@@ -1,0 +1,14 @@
+<div id="form">
+    <h4>PDFs created successully</h4>
+    <button><a href="/getPDF">Get Details</a></button>
+</div>
+
+<p id="loading">Getting PDFs. Please wait...</p>
+
+<script>
+    document.getElementById('loading').style.display = 'none';
+    function disableButton() {
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('loading').style.display = 'block';
+    }
+</script>

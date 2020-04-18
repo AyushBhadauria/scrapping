@@ -1,0 +1,17 @@
+<div id ="form">
+    <p>Please Enter post code to search</p>
+    <form class="main" method="post" action="">
+      <input type="text" name="code">
+      <button onclick="disableButton()" type="submit">Create PDFs</button>
+    </form>
+</div>
+
+<p id="loading">Creating PDFs. Please wait...</p>
+
+<script>
+  document.getElementById('loading').style.display = 'none';
+  function disableButton() {
+  document.getElementById('form').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+}
+</script>
