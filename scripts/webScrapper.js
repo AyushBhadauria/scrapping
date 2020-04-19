@@ -27,7 +27,7 @@ const getPdfData = (element, cookie) => {
       });
       const body7 = await request.getPromise(dlinkList[0].downlink,
         constants.PROXY_URL, constants.REQUEST_7_HEADERS);
-      console.log('body7', body7.length);
+      console.log('Creating PDF for ', element.title);
       const fileName = `${constants.UPLOAD_DIRECTORY}/${(element.title).trim()}.pdf`;
       const buffer = Buffer.from(body7, 'utf8');
       fs.writeFileSync(fileName, buffer);
@@ -38,10 +38,12 @@ const getPdfData = (element, cookie) => {
 
 // eslint-disable-next-line no-async-promise-executor
 module.exports.scrapeRealtor = (postcode) => new Promise(async (resolve, reject) => {
+  console.log('Service called to scrap data');
   const linkList = [];
   let cookie1 = '';
   let cookie2 = '';
   let cookie3 = '';
+  fs.mkdirSync(constants.root);
   try {
     // request 1
     const { response: response1 } = await request.get(constants.SCRAPPING_URL, constants.PROXY_URL);
@@ -81,9 +83,9 @@ module.exports.scrapeRealtor = (postcode) => new Promise(async (resolve, reject)
       // eslint-disable-next-line no-await-in-loop
       await getPdfData(element, cookie3);
     }
-    resolve();
+    resolve('PDFs downloaded successfully');
   } catch (err) {
-    console.log('Error Occured while scarping');
+    console.log('Error Occured while scrapping');
     console.log(err);
     reject(err);
   }

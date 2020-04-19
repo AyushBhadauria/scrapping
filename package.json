@@ -13,7 +13,7 @@
     "cheerio": "^1.0.0-rc.3",
     "ejs": "^3.0.2",
     "express": "*",
-    "pdfreader": "^1.0.6",
+    "pdf-parse": "^1.1.1",
     "request": "*",
     "request-promise": "*"
   },
