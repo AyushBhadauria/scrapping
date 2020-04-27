@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const request = require('./request');
 const constants = require('./constants');
+const utils = require('./utils');
 
 const getPdfData = (element, cookie) => {
   let id = '';
@@ -43,6 +44,7 @@ module.exports.scrapeRealtor = (postcode) => new Promise(async (resolve, reject)
   let cookie1 = '';
   let cookie2 = '';
   let cookie3 = '';
+  utils.deleteDirectory();
   fs.mkdirSync(constants.root);
   try {
     // request 1
